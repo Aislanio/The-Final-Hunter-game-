@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=New+Amsterdam&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+:root{
+ --family-trad: "New Amsterdam", sans-serif;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+body{
+    width: 100%;
+    height: 100%;
+   min-width: 100vh;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+body img{
+    width: 100%;
+    height: 100%;
+    max-width: 200vh;
+}
+
+.menu span{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 35vh;
+    height: 7vh;
+    text-align: center;
+    background-color: black;
+    text-decoration: none;
+    color: white;
+    font-size: 2.1em;
+    font-family: "New Amsterdam", sans-serif;
+    margin-bottom: 2.5vh;;
+
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: box-shadow 0.3s ease;
+}
+.menu span{
+    :hover {
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Sombra maior ao passar o mouse */
+    }
+}
+
+main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+main section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10vh;
+}
+main section img{
+    width: 100%;
+    max-width:36vh;
+}
+main section h1{
+    font-size: 2.5em;
+    font-family: "Baskervville SC", serif;
+}
+
+.login{
+    position: absolute;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    width: 150vh;
+    height: 90vh;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.Topico-Frasal{
+    font-family: "Caveat", cursive;
+    font-size:1.5em;
+    animation: shake 2.5s ease-in-out infinite;
+}
+.User {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10vh;
+}
+.New-User .login-google img{
+    width: 100%;
+    max-width: 7vh;
+}
+.User p{
+    font-size: 1.7em;
+    font-family: var(--family-trad);
+}
+.New-User{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+.login-google{
+    width: 45vh;
+    border-radius: 20px;
+    padding: 2vh;
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+}
+.login-google span{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 5px;
+}
+.login-google:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+}
+.off{
+    display: none;
+}
+.on{
+    display: flex;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  
