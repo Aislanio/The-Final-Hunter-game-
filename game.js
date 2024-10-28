@@ -68,7 +68,9 @@ let ObjetosFixo = [];
   DireTerra = new Image();
   EsqTerra = new Image();
   MidTerra = new Image();
-
+  MidEsq = new Image();
+  MidEmbaixo = new Image();
+  MidDire = new Image();
   //money
   
   //mouse
@@ -163,12 +165,15 @@ let camera = {
 
   }
  function assetsIlha(){
-    MiniMap.src = "assets/map/background/MiniMap.jpg"
-    water_img.src = "assets/map/background/Water.png";
+    MiniMap.src = "assets/map/background/grass.png"
+    water_img.src = "assets/map/background/grass.png";
     CenterTerra.src = "assets/map/background/chao/CenterTerra.png";
     DireTerra.src = "assets/map/background/chao/DireTerra.png";
     EsqTerra.src = "assets/map/background/chao/EsqTerra.png";
     MidTerra.src = "assets/map/background/chao/MidTerra.png";
+    MidDire.src = "assets/map/background/chao/MidDire.png";
+    MidEsq.src = "assets/map/background/chao/MidEsq.png";
+    MidEmbaixo.src = "assets/map/background/chao/MidEmbaixo.png";
   }
 load();
   async function load(){
@@ -624,11 +629,12 @@ function Uptade(){
 
 
   function colider(){
-    let playerColison = Players[0];
-    let playerColison2 = Players[1];
-  // if(playerColison.posx + 40 > playerColison2.posx && playerColison.posx < playerColison2.posx + 40 && playerColison.posy + 40 >  playerColison2.posy && playerColison.posy < playerColison2.posy + 40){
+   /* Players.forEach((player)=>{
+      if(playerColison.posx + 40 > playerColison2.posx && playerColison.posx < playerColison2.posx + 40 && playerColison.posy + 40 >  playerColison2.posy && playerColison.posy < playerColison2.posy + 40){
       
-  // }
+      }
+    })*/
+   
   }
 
   function coliderArco(){
@@ -1683,19 +1689,19 @@ function LoadMap(){
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -1754,7 +1760,7 @@ function LoadMap(){
 
   MapData.layers.forEach((layer)=>{
 
-    if(layer.name == "Background"){
+    if(layer.name == "Chao"){
       layer.data.forEach((rowi,rowIndex )=>{
         rowi.forEach((tile, colIndex) => {
             if(tile == 0){
@@ -1792,6 +1798,18 @@ function LoadMap(){
               const posx = colIndex * MapData.tileSize;
               const posy = rowIndex * MapData.tileSize;
               let tile_back = new Tile(CenterTerra,posx,posy,64,64,true);
+              Backgrounds.push(tile_back);
+            }
+            if(tile == 5){
+              const posx = colIndex * MapData.tileSize;
+              const posy = rowIndex * MapData.tileSize;
+              let tile_back = new Tile(MidEsq,posx,posy,64,64,true);
+              Backgrounds.push(tile_back);
+            }
+            if(tile == 6){
+              const posx = colIndex * MapData.tileSize;
+              const posy = rowIndex * MapData.tileSize;
+              let tile_back = new Tile(MidDire,posx,posy,64,64,true);
               Backgrounds.push(tile_back);
             }
         });
