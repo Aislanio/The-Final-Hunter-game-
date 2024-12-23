@@ -193,8 +193,10 @@ load();
       //Map Ilha
       
       
-      
-
+      //Atualizar dinheor do player
+      let Money_atual = getMoneyPlayer();
+      Money_Player = Money_atual;
+      console.log(Money_atual);
 
       await assetsIlha();
 
@@ -445,8 +447,6 @@ function Uptade(){
       //IA
       moveAI();
       moveAI2();
-      moveAI3();
-      moveAI4();
       if(Arco_chao){
         coliderArco();
       }
@@ -791,6 +791,8 @@ function Uptade(){
       });
     
     if(Iplayers== Players.length -1){
+      
+      
      if(iPerga == false){
       let fim_perga =  new Object("Pergaminho_final",pergaminho,canvas.width / 2 - 150,canvas.height / 2 -250,300,500,true);
       ObjetosFixo.push(fim_perga);
@@ -809,10 +811,8 @@ function Uptade(){
        ObjetosFixo.push(fim_perga);
        iPerga = true;
        Refreseh_game = true;
-       setTimeout(()=>{
-        load();
-        ObjetosFixo.splice(0,1);
-       }, 5000);
+       FimDetails(fim_perga);
+       setTimeout(load(), 5000);
       }
     }
     
@@ -839,14 +839,27 @@ function Uptade(){
       }
       Textos.push(PlayerText);
       numePlayer +=50
+
+      
     });
+
+    //Moedas 
+    Player1 = Players[0];
+
+    if(Player1.classe == "Wolf" && Player1.Estado == "Vivo"){
+      setMoneyPlayer(2);
+      Money_Player +=2
+      
+    }
+
+    
   };
   
  function PlayMusic(){
   document.addEventListener('keydown', () => {
 
     // Remover a mensagem depois de tocar o som
-    if(iPerga = true){return};
+    
     Inicio_Music.loop = true; 
     Inicio_Music.play();
 }, { once: true });
@@ -1074,136 +1087,149 @@ function moveAI() {
 }
 
 
-//IA2 ###############################
+
+
+//IA1 ###############################
 let i2 = 100;
 let MoveDire2 = null;
-let Decio_Morte2 = false
-let shouldKill2 = null;
+let Decio_Morte2 = false;
+let shouldKill2= false;
+let WolfRop2= true;
+
 function moveAI2() {
   IA1Player = Players[2];
   
-    if(Players[2].Estado == "Vivo"){
-
+    if(Players[2].Estado != "Vivo"){return};
       //fugir do wolf
       if(IA1Player.classe != "Wolf"){
         const wolf = Players.find(p => p.classe === "Wolf");
       
         
-        if(WolfAtivou){
-          let distX = IA1Player.posx - wolf.posx; // Distância horizontal até o Wolf
-          let distY = IA1Player.posy - wolf.posy; // Distância vertical até o Wolf
-          let distance = Math.sqrt(distX * distX + distY * distY); // Distância total até o Wolf
-
-          // Se a IA estiver muito perto do Wolf, ela foge
-          if (distance < 100) { // Defina a distância para começar a fugir
-            /// Se a IA estiver muito perto do Wolf, ela foge
-            function getNewDistance(newPosX, newPosY) {
-              let newDistX = newPosX - wolf.posx;
-              let newDistY = newPosY - wolf.posy;
-              return Math.sqrt(newDistX * newDistX + newDistY * newDistY);
+        // Cálculo da direção de fuga
+          if(WolfAtivou){
+            let distX = IA1Player.posx - wolf.posx; // Distância horizontal até o Wolf
+            let distY = IA1Player.posy - wolf.posy; // Distância vertical até o Wolf
+            let distance = Math.sqrt(distX * distX + distY * distY); // Distância total até o Wolf
+            if(distance < 100){
+                // Se a IA estiver muito perto do Wolf, ela foge
+              function getNewDistance(newPosX, newPosY) {
+                let newDistX = newPosX - wolf.posx;
+                let newDistY = newPosY - wolf.posy;
+                return Math.sqrt(newDistX * newDistX + newDistY * newDistY);
+              }
+              
+              // Se o movimento para cima aumentar a distância, mova
+              if (getNewDistance(IA1Player.posx, IA1Player.posy - IA1Player.speed) > distance) {
+                console.log('Movendo para cima, posição Y: ' + IA1Player.posy);
+                IA1Player.posy -= IA1Player.speed;
+              }
+              
+              // Se o movimento para baixo aumentar a distância, mova
+              if (getNewDistance(IA1Player.posx, IA1Player.posy + IA1Player.speed) > distance) {
+                console.log('Movendo para baixo, posição Y: ' + IA1Player.posy);
+                IA1Player.posy += IA1Player.speed;
+              }
+              
+              // Se o movimento para direita aumentar a distância, mova
+              if (getNewDistance(IA1Player.posx + IA1Player.speed, IA1Player.posy) > distance) {
+                console.log('Movendo para direita, posição X: ' + IA1Player.posx);
+                IA1Player.posx += IA1Player.speed;
+              }
+              
+              // Se o movimento para esquerda aumentar a distância, mova
+              if (getNewDistance(IA1Player.posx - IA1Player.speed, IA1Player.posy) > distance) {
+                console.log('Movendo para esquerda, posição X: ' + IA1Player.posx);
+                IA1Player.posx -= IA1Player.speed;
+              }
+              return;
             }
             
-            // Se o movimento para cima aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx, IA1Player.posy - IA1Player.speed) > distance) {
-              console.log('Movendo para cima, posição Y: ' + IA1Player.posy);
-              IA1Player.posy -= IA1Player.speed;
-            }
-            
-            // Se o movimento para baixo aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx, IA1Player.posy + IA1Player.speed) > distance) {
-              console.log('Movendo para baixo, posição Y: ' + IA1Player.posy);
-              IA1Player.posy += IA1Player.speed;
-            }
-            
-            // Se o movimento para direita aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx + IA1Player.speed, IA1Player.posy) > distance) {
-              console.log('Movendo para direita, posição X: ' + IA1Player.posx);
-              IA1Player.posx += IA1Player.speed;
-            }
-            
-            // Se o movimento para esquerda aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx - IA1Player.speed, IA1Player.posy) > distance) {
-              console.log('Movendo para esquerda, posição X: ' + IA1Player.posx);
-              IA1Player.posx -= IA1Player.speed;
-            }
-            return;
         }
-       
-      }
           
       }
 
       if(IA1Player.classe == "Wolf"){
-        // Encontrar o player vivo mais próximo
-        let nearestPlayer = null;
-        let minDistance = Infinity;
-  
-        Players.forEach(player => {
-            if(player.Estado === "Vivo" && player !== IA1Player){ // Não considerar o próprio Wolf
-                let distX = player.posx - IA1Player.posx;
-                let distY = player.posy - IA1Player.posy;
-                let distance = Math.sqrt(distX * distX + distY * distY);
-                
-                if(distance < minDistance){
-                    minDistance = distance;
-                    nearestPlayer = player;
-                }
-            }
-        });
-        if(Decio_Morte2 == false && shouldKill2 == false){
-          shouldKill2 = Math.random() > 0.5; // 50% de chance de atacar
-          Decio_Morte2 = true;
+          // Encontrar o player vivo mais próximo
+          let nearestPlayer = null;
+          let minDistance = Infinity;
           
-          
-        }else{
-          setTimeout(() =>{
-            Decio_Morte2 =false;
-          }, 30000);
-        }
-        if(shouldKill2 == true){
-          IA2Player.img = Wolf_img;
-        }else if(shouldKill2 == false){
-          IA2Player.img = Player_img;
-        }
+          Players.forEach(player => {
+              if(player.Estado === "Vivo" && player !== IA1Player){ // Não considerar o próprio Wolf
+                  let distX = player.posx - IA1Player.posx;
+                  let distY = player.posy - IA1Player.posy;
+                  let distance = Math.sqrt(distX * distX + distY * distY);
+                  
+                  if(distance < minDistance){
+                      minDistance = distance;
+                      nearestPlayer = player;
+                  }
+              }
+          });
 
-        if(nearestPlayer){
-            // Decidir se vai matar o player
+          if(Decio_Morte2 == false && shouldKill2 == false){
+            shouldKill2 = Math.random() > 0.5; // 50% de chance de atacar
+            Decio_Morte2 = true;
             
             
-            if(shouldKill2){
-                
-                // Se decidir atacar e estiver próximo o suficiente
-                if(minDistance < 20){ // A distância de 20 é um exemplo, ajuste conforme necessário
-                    
-                    nearestPlayer.Estado = "Morto"; // Muda o estado do jogador para morto
-                    Decio_Morte2 = true;
-                    shouldKill2 = false
-                } else {
-                    // Perseguir o jogador mais próximo
-                    if(nearestPlayer.posx > IA1Player.posx){
-                        IA1Player.posx += IA1Player.speed;
-                    } else if(nearestPlayer.posx < IA1Player.posx){
-                        IA1Player.posx -= IA1Player.speed;
-                    }
-                    
-                    if(nearestPlayer.posy > IA1Player.posy){
-                        IA1Player.posy += IA1Player.speed;
-                    } else if(nearestPlayer.posy < IA1Player.posy){
-                        IA1Player.posy -= IA1Player.speed;
-                    }
-                }
-              return;
-            } 
+          }else{
+            setTimeout(() =>{
+              Decio_Morte2 =false;
+            }, 30000);
           }
-            
-      }
+          if(shouldKill2 == true){
+            IA1Player.img = Wolf_img;
+          }else if(shouldKill2 == false){
+            IA1Player.img = Player_img;
+          }
+          
+          if(nearestPlayer){
+              // Decidir se vai matar o player
+              
+              
+              
+              if(shouldKill2){
+                  
+                  // Se decidir atacar e estiver próximo o suficiente
+                  if(minDistance < 20){ // A distância de 20 é um exemplo, ajuste conforme necessário
+                    
+                      
+                      
+                    
+                      nearestPlayer.Estado = "Morto"; // Muda o estado do jogador para morto
+
+                      WolfRop2 = false
+                      WolfAttackIA(IA1Player);
+                      console.log( 'Matou Player')
+                        
+                      Decio_Morte2 = true;
+                      
+                      shouldKill2 = false;
+                  } else {
+                      // Perseguir o jogador mais próximo
+                      if(nearestPlayer.posx > IA1Player.posx){
+                          IA1Player.posx += IA1Player.speed;
+                      } else if(nearestPlayer.posx < IA1Player.posx){
+                          IA1Player.posx -= IA1Player.speed;
+                      }
+                      
+                      if(nearestPlayer.posy > IA1Player.posy){
+                          IA1Player.posy += IA1Player.speed;
+                      } else if(nearestPlayer.posy < IA1Player.posy){
+                          IA1Player.posy -= IA1Player.speed;
+                      }
+                  }
+                  return;
+              } }
+                
+            }
+
       //Movimento Aleatorio
       let movimento = ["Cima", "Baixo", "Direita","Esquerda"];
       let MoveIndex = null;
       
 
     
-        if (i === 100) {
+        if (i2 === 100) {
           MoveIndex = Math.floor(Math.random() * movimento.length);
           MoveDire2 = movimento[MoveIndex];
           
@@ -1239,353 +1265,10 @@ function moveAI2() {
       }
 
 
-    }
-
-  
-}
-
-
-
-//IA3 ###############################
-let i3 = 100;
-let MoveDire3 = null;
-let Decio_Morte3 = false;
-let shouldKill3 = null;
-function moveAI3() {
-  IA1Player = Players[3];
- 
-    if(Players[3].Estado == "Vivo"){
-      //fugir do wolf
-      if(IA1Player.classe != "Wolf"){
-        const wolf = Players.find(p => p.classe === "Wolf");
-      
-        
-        if(WolfAtivou){
-          let distX = IA1Player.posx - wolf.posx; // Distância horizontal até o Wolf
-          let distY = IA1Player.posy - wolf.posy; // Distância vertical até o Wolf
-          let distance = Math.sqrt(distX * distX + distY * distY); // Distância total até o Wolf
-
-          // Se a IA estiver muito perto do Wolf, ela foge
-          if (distance < 100) { // Defina a distância para começar a fugir
-            // Se a IA estiver muito perto do Wolf, ela foge
-            function getNewDistance(newPosX, newPosY) {
-              let newDistX = newPosX - wolf.posx;
-              let newDistY = newPosY - wolf.posy;
-              return Math.sqrt(newDistX * newDistX + newDistY * newDistY);
-            }
-            
-            // Se o movimento para cima aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx, IA1Player.posy - IA1Player.speed) > distance) {
-              console.log('Movendo para cima, posição Y: ' + IA1Player.posy);
-              IA1Player.posy -= IA1Player.speed;
-            }
-            
-            // Se o movimento para baixo aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx, IA1Player.posy + IA1Player.speed) > distance) {
-              console.log('Movendo para baixo, posição Y: ' + IA1Player.posy);
-              IA1Player.posy += IA1Player.speed;
-            }
-            
-            // Se o movimento para direita aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx + IA1Player.speed, IA1Player.posy) > distance) {
-              console.log('Movendo para direita, posição X: ' + IA1Player.posx);
-              IA1Player.posx += IA1Player.speed;
-            }
-            
-            // Se o movimento para esquerda aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx - IA1Player.speed, IA1Player.posy) > distance) {
-              console.log('Movendo para esquerda, posição X: ' + IA1Player.posx);
-              IA1Player.posx -= IA1Player.speed;
-            }
-            return;
-        }
-        
-      }
-          
-      }
-
-
-      if(IA1Player.classe == "Wolf"){
-        // Encontrar o player vivo mais próximo
-        let nearestPlayer = null;
-        let minDistance = Infinity;
-  
-        Players.forEach(player => {
-            if(player.Estado === "Vivo" && player !== IA1Player){ // Não considerar o próprio Wolf
-                let distX = player.posx - IA1Player.posx;
-                let distY = player.posy - IA1Player.posy;
-                let distance = Math.sqrt(distX * distX + distY * distY);
-                
-                if(distance < minDistance){
-                    minDistance = distance;
-                    nearestPlayer = player;
-                }
-            }
-        });
-        if(Decio_Morte3 == false && shouldKill == false){
-          shouldKill = Math.random() > 0.5; // 50% de chance de atacar
-          Decio_Morte3 = true;
-          
-          
-        }else{
-          setTimeout(() =>{
-            Decio_Morte3 =false;
-          }, 30000);
-        }
-        if(shouldKill == true){
-          IA1Player.img = Wolf_img;
-        }else if(shouldKill == false){
-          IA1Player.img = Player_img;
-        }
-        if(nearestPlayer){
-            // Decidir se vai matar o player
-            
-          
-            if(shouldKill3){
-                
-                // Se decidir atacar e estiver próximo o suficiente
-                if(minDistance < 20){ // A distância de 20 é um exemplo, ajuste conforme necessário
-                    
-                    nearestPlayer.Estado = "Morto"; // Muda o estado do jogador para morto
-                    Decio_Morte3 = true;
-                    shouldKill3 = false;
-                } else {
-                    // Perseguir o jogador mais próximo
-                    if(nearestPlayer.posx > IA1Player.posx){
-                        IA1Player.posx += IA1Player.speed;
-                    } else if(nearestPlayer.posx < IA1Player.posx){
-                        IA1Player.posx -= IA1Player.speed;
-                    }
-                    
-                    if(nearestPlayer.posy > IA1Player.posy){
-                        IA1Player.posy += IA1Player.speed;
-                    } else if(nearestPlayer.posy < IA1Player.posy){
-                        IA1Player.posy -= IA1Player.speed;
-                    }
-                }
-                return;
-            } }
-             
-          }
-
-      //Movimento Aleatorio
-      let movimento = ["Cima", "Baixo", "Direita","Esquerda"];
-      let MoveIndex = null;
-      
-
     
-        if (i === 100) {
-          MoveIndex = Math.floor(Math.random() * movimento.length);
-          MoveDire3 = movimento[MoveIndex];
-          
-          i3 = 0;
-        } else {
-          i3++; 
-        }
-        
-      //MOver a IA
-      
-      if(MoveDire3 == "Cima"){
-       
-        IA1Player.posy -= IA1Player.speed;
-          
-      }
-      if(MoveDire3 == "Baixo"){
-        
-        IA1Player.posy  += IA1Player.speed;
-        
-        
-      }
-      if(MoveDire3 == "Direita"){
-        
-        IA1Player.posx += IA1Player.speed;
-        
-        
-      }
-      if(MoveDire3 == "Esquerda"){
-        
-        IA1Player.posx -= IA1Player.speed;
-        
-        
-      }
-
-
-    }
 
   
 }
-
-
-
-//IA1 ###############################
-let i4 = 100;
-let MoveDire4 = null;
-let Decio_Morte4 = false;
-let shouldKill4 = null;
-function moveAI4() {
-  IA1Player = Players[4];
-  
-    if(Players[4].Estado != "Vivo"){return}
-
-
-      if(IA1Player.classe != "Wolf"){
-        const wolf = Players.find(p => p.classe === "Wolf");
-      
-        
-        if(WolfAtivou){
-          let distX = IA1Player.posx - wolf.posx; // Distância horizontal até o Wolf
-          let distY = IA1Player.posy - wolf.posy; // Distância vertical até o Wolf
-          let distance = Math.sqrt(distX * distX + distY * distY); // Distância total até o Wolf
-
-          // Se a IA estiver muito perto do Wolf, ela foge
-          if (distance < 100) { // Defina a distância para começar a fugir
-            // Se a IA estiver muito perto do Wolf, ela foge
-            function getNewDistance(newPosX, newPosY) {
-              let newDistX = newPosX - wolf.posx;
-              let newDistY = newPosY - wolf.posy;
-              return Math.sqrt(newDistX * newDistX + newDistY * newDistY);
-            }
-            
-            // Se o movimento para cima aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx, IA1Player.posy - IA1Player.speed) > distance) {
-              console.log('Movendo para cima, posição Y: ' + IA1Player.posy);
-              IA1Player.posy -= IA1Player.speed;
-            }
-            
-            // Se o movimento para baixo aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx, IA1Player.posy + IA1Player.speed) > distance) {
-              console.log('Movendo para baixo, posição Y: ' + IA1Player.posy);
-              IA1Player.posy += IA1Player.speed;
-            }
-            
-            // Se o movimento para direita aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx + IA1Player.speed, IA1Player.posy) > distance) {
-              console.log('Movendo para direita, posição X: ' + IA1Player.posx);
-              IA1Player.posx += IA1Player.speed;
-            }
-            
-            // Se o movimento para esquerda aumentar a distância, mova
-            if (getNewDistance(IA1Player.posx - IA1Player.speed, IA1Player.posy) > distance) {
-              console.log('Movendo para esquerda, posição X: ' + IA1Player.posx);
-              IA1Player.posx -= IA1Player.speed;
-            }
-            return;
-        }
-        
-      }
-          
-      
-      if(IA1Player.classe == "Wolf"){
-        // Encontrar o player vivo mais próximo
-        let nearestPlayer = null;
-        let minDistance = Infinity;
-  
-        Players.forEach(player => {
-            if(player.Estado === "Vivo" && player !== IA1Player){ // Não considerar o próprio Wolf
-                let distX = player.posx - IA1Player.posx;
-                let distY = player.posy - IA1Player.posy;
-                let distance = Math.sqrt(distX * distX + distY * distY);
-                
-                if(distance < minDistance){
-                    minDistance = distance;
-                    nearestPlayer = player;
-                }
-            }
-        });
-        if(Decio_Morte4 == false && shouldKill4 == false){
-          shouldKill4 = Math.random() > 0.5; // 50% de chance de atacar
-          Decio_Morte4 = true;
-          
-          
-        }else{
-          setTimeout(() =>{
-            Decio_Morte4 =false;
-          }, 30000);
-        }
-        if(shouldKill4 == true){
-          IA4Player.img = Wolf_img;
-        }else if(shouldKill == false){
-          IA4Player.img = Player_img;
-        }
-        if(nearestPlayer){
-            // Decidir se vai matar o player
-            
-          
-            if(shouldKill4){
-                
-                // Se decidir atacar e estiver próximo o suficiente
-                if(minDistance < 20){ // A distância de 20 é um exemplo, ajuste conforme necessário
-                    
-                    nearestPlayer.Estado = "Morto"; // Muda o estado do jogador para morto
-                    Decio_Morte4 = true;
-                    shouldKill4 = false;
-                } else {
-                    // Perseguir o jogador mais próximo
-                    if(nearestPlayer.posx > IA1Player.posx){
-                        IA1Player.posx += IA1Player.speed;
-                    } else if(nearestPlayer.posx < IA1Player.posx){
-                        IA1Player.posx -= IA1Player.speed;
-                    }
-                    
-                    if(nearestPlayer.posy > IA1Player.posy){
-                        IA1Player.posy += IA1Player.speed;
-                    } else if(nearestPlayer.posy < IA1Player.posy){
-                        IA1Player.posy -= IA1Player.speed;
-                    }
-                }
-            } 
-            return;
-          }
-              
-          }
-      //Movimento Aleatorio
-      let movimento = ["Cima", "Baixo", "Direita","Esquerda"];
-      let MoveIndex = null;
-      
-
-    
-        if (i === 100) {
-          MoveIndex = Math.floor(Math.random() * movimento.length);
-          MoveDire4 = movimento[MoveIndex];
-        
-          i4 = 0;
-        } else {
-          i4++; 
-        }
-        
-      //MOver a IA
-      
-      if(MoveDire4 == "Cima"){
-       
-        IA1Player.posy -= IA1Player.speed;
-          
-      }
-      if(MoveDire4== "Baixo"){
-        
-        IA1Player.posy  += IA1Player.speed;
-        
-        
-      }
-      if(MoveDire4 == "Direita"){
-        
-        IA1Player.posx += IA1Player.speed;
-        
-        
-      }
-      if(MoveDire4 == "Esquerda"){
-        
-        IA1Player.posx -= IA1Player.speed;
-        
-        
-      }
-
-
-    }
-
-  
-}
-
-
 /* Players.forEach((player, index) => {
       if (index === 0) return; // Ignora o jogador controlado pelo usuário
 
@@ -1802,4 +1485,25 @@ function LoadMap(){
     
   });
 
+}
+
+// DINHEIRO MONEY COOKIE
+function setMoneyPlayer(value) {
+  // Obtém o valor atual e soma o novo valor
+  let money = getMoneyPlayer() + value;
+  const date = new Date();
+  date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000)); // Expira em 7 dias
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `Money_Player=${money}; ${expires}; path=/;`;
+}
+
+function getMoneyPlayer() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.startsWith("Money_Player=")) {
+          return parseInt(cookie.substring("Money_Player=".length), 10);
+      }
+  }
+  return 0; // Retorna 0 caso o cookie não exista
 }
