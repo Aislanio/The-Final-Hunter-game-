@@ -194,7 +194,7 @@ load();
       
       
       //Atualizar dinheor do player
-      let Money_atual = getMoneyPlayer();
+      let Money_atual = setMoneyPlayer(0);
       Money_Player = Money_atual;
       console.log(Money_atual);
 
@@ -848,7 +848,15 @@ function Uptade(){
 
     if(Player1.classe == "Wolf" && Player1.Estado == "Vivo"){
       setMoneyPlayer(2);
-      Money_Player +=2
+      
+      
+    }else if(Player1.classe == "Villager" && Player1.Estado == "Vivo"){
+      setMoneyPlayer(1);
+      
+      
+    }else if(Player1.classe == "Hunter" && Player1.Estado == "Vivo"){
+      setMoneyPlayer(2);
+        
       
     }
 
@@ -900,7 +908,6 @@ function gerarPosicoesAleatorias() {
   Players.forEach(player => {
       player.posx = Math.floor(Math.random() * mapWidth);
       player.posy = Math.floor(Math.random() * mapHeight);
-      console.log(`Posição gerada para ${player.classe}: X=${player.posx}, Y=${player.posy}`);
   });
 }
 
@@ -936,25 +943,25 @@ function moveAI() {
               
               // Se o movimento para cima aumentar a distância, mova
               if (getNewDistance(IA1Player.posx, IA1Player.posy - IA1Player.speed) > distance) {
-                console.log('Movendo para cima, posição Y: ' + IA1Player.posy);
+                
                 IA1Player.posy -= IA1Player.speed;
               }
               
               // Se o movimento para baixo aumentar a distância, mova
               if (getNewDistance(IA1Player.posx, IA1Player.posy + IA1Player.speed) > distance) {
-                console.log('Movendo para baixo, posição Y: ' + IA1Player.posy);
+                
                 IA1Player.posy += IA1Player.speed;
               }
               
               // Se o movimento para direita aumentar a distância, mova
               if (getNewDistance(IA1Player.posx + IA1Player.speed, IA1Player.posy) > distance) {
-                console.log('Movendo para direita, posição X: ' + IA1Player.posx);
+                
                 IA1Player.posx += IA1Player.speed;
               }
               
               // Se o movimento para esquerda aumentar a distância, mova
               if (getNewDistance(IA1Player.posx - IA1Player.speed, IA1Player.posy) > distance) {
-                console.log('Movendo para esquerda, posição X: ' + IA1Player.posx);
+                
                 IA1Player.posx -= IA1Player.speed;
               }
               return;
@@ -1490,20 +1497,28 @@ function LoadMap(){
 // DINHEIRO MONEY COOKIE
 function setMoneyPlayer(value) {
   // Obtém o valor atual e soma o novo valor
-  let money = getMoneyPlayer() + value;
-  const date = new Date();
-  date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000)); // Expira em 7 dias
-  const expires = `expires=${date.toUTCString()}`;
-  document.cookie = `Money_Player=${money}; ${expires}; path=/;`;
+  let getMone = Number(getMoneyPlayer());
+  let money = getMone + value;
+  console.log(money);
+  
+  if(money == 0){
+    return
+  }
+  localStorage.removeItem("coin");
+  localStorage.setItem("coin", money);
+  Money_Player = money
+  Textos[0].texto = money;
 }
 
 function getMoneyPlayer() {
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i].trim();
-      if (cookie.startsWith("Money_Player=")) {
-          return parseInt(cookie.substring("Money_Player=".length), 10);
-      }
+  console.log('getMoney:')
+  const cat = localStorage.getItem("coin");
+  console.log('catGetmoney  : '+cat)
+  if(cat == null){
+    return 0
   }
-  return 0; // Retorna 0 caso o cookie não exista
+  else{
+    return cat
+  }
+ 
 }
