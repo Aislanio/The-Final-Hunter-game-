@@ -72,7 +72,8 @@ let ObjetosFixo = [];
   MidEmbaixo = new Image();
   MidDire = new Image();
   //money
-  
+  //objs
+  madeira =  new Image();
   //mouse
   let mouseX = 0;
   let mouseY = 0;
@@ -191,7 +192,7 @@ load();
 
 
       //Map Ilha
-      
+      madeira.src = 'assets/map/background/objs/madeira.png'
       
       //Atualizar dinheor do player
       let Money_atual = setMoneyPlayer(0);
@@ -947,24 +948,28 @@ function moveAI() {
               if (getNewDistance(IA1Player.posx, IA1Player.posy - IA1Player.speed) > distance) {
                 
                 IA1Player.posy -= IA1Player.speed;
+                
               }
               
               // Se o movimento para baixo aumentar a distância, mova
               if (getNewDistance(IA1Player.posx, IA1Player.posy + IA1Player.speed) > distance) {
                 
                 IA1Player.posy += IA1Player.speed;
+                
               }
               
               // Se o movimento para direita aumentar a distância, mova
               if (getNewDistance(IA1Player.posx + IA1Player.speed, IA1Player.posy) > distance) {
                 
                 IA1Player.posx += IA1Player.speed;
+                
               }
               
               // Se o movimento para esquerda aumentar a distância, mova
               if (getNewDistance(IA1Player.posx - IA1Player.speed, IA1Player.posy) > distance) {
                 
                 IA1Player.posx -= IA1Player.speed;
+                
               }
               return;
             }
@@ -1015,7 +1020,7 @@ function moveAI() {
               if(shouldKill){
                   
                   // Se decidir atacar e estiver próximo o suficiente
-                  if(minDistance < 20){ // A distância de 20 é um exemplo, ajuste conforme necessário
+                  if(minDistance < 20){ 
                     
                       
                       
@@ -1033,14 +1038,18 @@ function moveAI() {
                       // Perseguir o jogador mais próximo
                       if(nearestPlayer.posx > IA1Player.posx){
                           IA1Player.posx += IA1Player.speed;
+                          moveWolf(cima,1);
                       } else if(nearestPlayer.posx < IA1Player.posx){
                           IA1Player.posx -= IA1Player.speed;
+                          moveWolf(baixo,1);
                       }
                       
                       if(nearestPlayer.posy > IA1Player.posy){
                           IA1Player.posy += IA1Player.speed;
+                          moveWolf(esquerda,1);
                       } else if(nearestPlayer.posy < IA1Player.posy){
                           IA1Player.posy -= IA1Player.speed;
+                          moveWolf(direita,1);
                       }
                   }
                   return;
@@ -1773,6 +1782,43 @@ function LoadMap(){
           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 
         ]
+      },
+      {
+        "name": "Objetos",
+        "data": [
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 4, 4, 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+
+        ]
       }
   
     ],
@@ -1784,6 +1830,7 @@ function LoadMap(){
       }
     ]
   } 
+
 
   //########################### PROCESAR MAP ###########################################
 
@@ -1858,10 +1905,84 @@ function LoadMap(){
         });
       });
     }
+    //Obejtos
+    if(layer.name == "Objetos"){
+      layer.data.forEach((rowi,rowIndex )=>{
+        rowi.forEach((tile, colIndex) => {
+            if(tile == 1){
+              const posx = colIndex * MapData.tileSize;
+              const posy = rowIndex * MapData.tileSize;
+              let tile_back = new Tile(madeira,posx,posy,64,64,true);
+              Backgrounds.push(tile_back);
+            }
+           
+        });
+      });
+    }
     
   });
 
 }
+
+MapSecond.layers.forEach((layer)=>{
+
+  if(layer.name == "Chao"){
+    layer.data.forEach((rowi,rowIndex )=>{
+      rowi.forEach((tile, colIndex) => {
+          if(tile == 0){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(water_img,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+      });
+    });
+  };
+
+  if(layer.name == "Chao"){
+    layer.data.forEach((rowi,rowIndex )=>{
+      rowi.forEach((tile, colIndex) => {
+          if(tile == 1){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(EsqTerra,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+          if(tile == 2){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(MidTerra,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+          if(tile == 3){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(DireTerra,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+          if(tile == 4){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(CenterTerra,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+          if(tile == 5){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(MidEsq,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+          if(tile == 6){
+            const posx = colIndex * MapData.tileSize;
+            const posy = rowIndex * MapData.tileSize;
+            let tile_back = new Tile(MidDire,posx,posy,64,64,true);
+            Backgrounds.push(tile_back);
+          }
+      });
+    });
+  }
+  
+});
 
 // DINHEIRO MONEY COOKIE
 function setMoneyPlayer(value) {
@@ -1890,4 +2011,16 @@ function getMoneyPlayer() {
     return cat
   }
  
+}
+
+
+//ANIMAÇÃO DO PERSONAGENS
+let moveImg = 1;
+function moveWolf(dire, player){
+
+  if(dire = 'direita'){
+    setInterval(() => {
+      
+    }, 1000);
+  }
 }
